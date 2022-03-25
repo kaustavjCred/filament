@@ -38,5 +38,5 @@ android {
 
 dependencies {
     implementation deps.kotlin
-    implementation project(':filament-android')
+    implementation 'com.google.android.filament:filament-android:1.20.3'
 }
