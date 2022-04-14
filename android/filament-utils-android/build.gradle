@@ -40,8 +40,7 @@ dependencies {
     implementation deps.coroutines.core
     implementation deps.coroutines.android
 
-    api project(':filament-android')
-    api module("com.google.android.filament:gltfio-android:${VERSION_NAME}")
+    api 'com.google.android.filament:filament-android:1.20.3'
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
