@@ -23,11 +23,11 @@ import android.view.Choreographer
 import android.view.Surface
 import android.view.SurfaceView
 import android.view.animation.LinearInterpolator
-
 import com.google.android.filament.*
 import com.google.android.filament.android.DisplayHelper
 import com.google.android.filament.android.UiHelper
-
+import com.google.android.filament.gltfio.FilamentAsset
+import com.google.android.filament.utils.*
 import java.nio.ByteBuffer
 import java.nio.channels.Channels
 import kotlin.math.PI
@@ -45,10 +45,13 @@ class MainActivity : Activity() {
 
     // The View we want to render into
     private lateinit var surfaceView: SurfaceView
+
     // UiHelper is provided by Filament to manage SurfaceView and SurfaceTexture
     private lateinit var uiHelper: UiHelper
+
     // DisplayHelper is provided by Filament to manage the display
     private lateinit var displayHelper: DisplayHelper
+
     // Choreographer is used to schedule new frames
     private lateinit var choreographer: Choreographer
 
@@ -56,12 +59,16 @@ class MainActivity : Activity() {
     // Each engine must be accessed from a single thread of your choosing
     // Resources cannot be shared across engines
     private lateinit var engine: Engine
+
     // A renderer instance is tied to a single surface (SurfaceView, TextureView, etc.)
     private lateinit var renderer: Renderer
+
     // A scene holds all the renderable, lights, etc. to be drawn
     private lateinit var scene: Scene
+
     // A view defines a viewport, a scene and a camera for rendering
     private lateinit var view: View
+
     // Should be pretty obvious :)
     private lateinit var camera: Camera
 
@@ -72,7 +79,8 @@ class MainActivity : Activity() {
     private lateinit var ibl: Ibl
 
     // Filament entity representing a renderable object
-    @Entity private var light = 0
+    @Entity
+    private var light = 0
 
     // A swap chain is Filament's representation of a surface
     private var swapChain: SwapChain? = null
@@ -145,15 +153,15 @@ class MainActivity : Activity() {
         val materials = mapOf("DefaultMaterial" to materialInstance)
 
         // Load the mesh in the filamesh format (see filamesh tool)
-        mesh = loadMesh(assets, "models/shader_ball.filamesh", materials, engine)
+        mesh = loadMesh(assets, "models/Model.filamesh", materials, engine)
 
         // Move the mesh down
         // Filament uses column-major matrices
         engine.transformManager.setTransform(engine.transformManager.getInstance(mesh.renderable),
                 floatArrayOf(
-                        1.0f,  0.0f, 0.0f, 0.0f,
-                        0.0f,  1.0f, 0.0f, 0.0f,
-                        0.0f,  0.0f, 1.0f, 0.0f,
+                        1.0f, 0.0f, 0.0f, 0.0f,
+                        0.0f, 1.0f, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f,
                         0.0f, -1.2f, 0.0f, 1.0f
                 ))
 
@@ -189,6 +197,16 @@ class MainActivity : Activity() {
         readUncompressedAsset("materials/clear_coat.filamat").let {
             material = Material.Builder().payload(it, it.remaining()).build(engine)
         }
+    }
+
+    fun transformToUnitCube(engine: Engine, asset: FilamentAsset) {
+        val tm = engine.transformManager
+        val center = asset.boundingBox.center.let { v -> Float3(v[0], v[1], v[2]) }
+        val halfExtent = asset.boundingBox.halfExtent.let { v -> Float3(v[0], v[1], v[2]) }
+        val maxExtent = 2.0f * max(halfExtent)
+        val scaleFactor = 2.0f / maxExtent
+        val transform = scale(Float3(scaleFactor)) * translation(Float3(-center))
+        tm.setTransform(tm.getInstance(asset.root), transpose(transform).toFloatArray())
     }
 
     private fun setupMaterial() {

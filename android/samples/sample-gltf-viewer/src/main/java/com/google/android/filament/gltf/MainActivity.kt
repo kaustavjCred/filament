@@ -24,9 +24,7 @@ import android.view.*
 import android.view.GestureDetector
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.filament.Fence
-import com.google.android.filament.IndirectLight
-import com.google.android.filament.Skybox
+import com.google.android.filament.*
 import com.google.android.filament.View
 import com.google.android.filament.utils.*
 import kotlinx.coroutines.CoroutineScope

@@ -7,14 +7,14 @@ plugins {
 project.ext.isSample = true
 
 filamentTools {
-/*    materialInputDir = project.layout.projectDirectory.dir("src/main/materials")
+    materialInputDir = project.layout.projectDirectory.dir("src/main/materials")
     materialOutputDir = project.layout.projectDirectory.dir("src/main/assets/materials")
 
-    meshInputFile = project.layout.projectDirectory.file("../../../third_party/models/PinkSoldier_sketch.obj")
+    meshInputFile = project.layout.projectDirectory.file("../../../third_party/models/cardtest.obj")
     meshOutputDir = project.layout.projectDirectory.dir("src/main/assets/models")
 
     iblInputFile = project.layout.projectDirectory.file("../../../third_party/environments/flower_road_no_sun_2k.hdr")
-    iblOutputDir = project.layout.projectDirectory.dir("src/main/assets/envs")*/
+    iblOutputDir = project.layout.projectDirectory.dir("src/main/assets/envs")
 }
 
 clean.doFirst {
@@ -44,5 +44,5 @@ android {
 
 dependencies {
     implementation deps.kotlin
-    implementation 'com.google.android.filament:filament-android:1.20.3'
+    implementation 'com.google.android.filament:filament-utils-android:1.20.3'
 }

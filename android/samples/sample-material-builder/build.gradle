@@ -7,7 +7,7 @@ plugins {
 project.ext.isSample = true
 
 filamentTools {
-    meshInputFile = project.layout.projectDirectory.file("../../../third_party/models/shader_ball/shader_ball.obj")
+    meshInputFile = project.layout.projectDirectory.file("../../../third_party/models/card/card.obj")
     meshOutputDir = project.layout.projectDirectory.dir("src/main/assets/models")
 
     iblInputFile = project.layout.projectDirectory.file("../../../third_party/environments/flower_road_no_sun_2k.hdr")

@@ -133,6 +133,7 @@ class MainActivity : Activity(), ActivityCompat.OnRequestPermissionsResultCallba
         // declare 6 primitives (1 per face) and give each of them a different material
         // instance, setup with different parameters
         RenderableManager.Builder(1)
+        RenderableManager.Builder(1)
                 // Overall bounding box of the renderable
                 .boundingBox(Box(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f))
                 // Sets the mesh data of the first primitive, 6 faces of 6 indices each
